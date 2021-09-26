@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import MyHash
 from .forms import MyHashForm
+import hashlib
 
 def my_hash_list(request):
     hashes = MyHash.objects.all().order_by('message')
@@ -11,7 +12,8 @@ def my_hash_new(request):
         form = MyHashForm(request.POST)
         if form.is_valid():
             my_hash = form.save(commit=False)
-            print(my_hash.message, my_hash.my_hash)
+            msg = my_hash.message
+            my_hash.my_hash = hashlib.sha256(msg.encode()).hexdigest() 
             my_hash.save()
             return redirect('/', pk=my_hash.pk)
     else:

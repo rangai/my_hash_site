@@ -6,4 +6,4 @@ class MyHashForm(forms.ModelForm):
     
     class Meta:
         model=MyHash
-        fields=('message','my_hash',)
+        fields=('message',)
